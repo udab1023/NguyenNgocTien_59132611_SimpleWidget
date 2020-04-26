@@ -10,16 +10,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import android.widget.CompoundButton;
-import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
     EditText edt1, edt2, edt3;
     RadioGroup rdg;
-    RadioButton rbnam, rbnu;
+    RadioButton rb;
     CheckBox cb1, cb2, cb3, cb4, cb5;
     Button btn;
-    private String LOGTAG = "AndroidRadioDemo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
         edt2=findViewById(R.id.edt2);
         edt3=findViewById(R.id.edt3);
         rdg=findViewById(R.id.rdg);
-        rbnam=findViewById(R.id.rbnam);
-        rbnu=findViewById(R.id.rbnu);
         cb1=findViewById(R.id.cb1);
         cb2=findViewById(R.id.cb2);
         cb3=findViewById(R.id.cb3);
@@ -44,22 +39,6 @@ public class MainActivity extends AppCompatActivity {
         btn=findViewById(R.id.btn);
     }
     private void addEvents(){
-        rbnu.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                doOnCharacterChanged(buttonView,isChecked);
-            }
-        });
-
-        // When radio button "Male" checked change.
-        rbnam.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                doOnCharacterChanged(buttonView,isChecked);
-            }
-        });
         btn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,20 +46,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void doOnCharacterChanged(CompoundButton buttonView, boolean isChecked)  {
-        RadioButton radio =(RadioButton) buttonView;
-
-        Log.i(LOGTAG, "RadioButton "+ radio.getText()+" : "+ isChecked);
-    }
 
     private void doXacNhan()  {
-        float ten = Float.parseFloat(edt1.getText().toString());
-        float ngaysinh = Float.parseFloat(edt2.getText().toString());
-        int GioiTinh = rdg.getCheckedRadioButtonId();
-        RadioButton rdg = findViewById(GioiTinh);
-        String message = "Gioi Tinh: " + rdg.getText() ;
-        Toast.makeText(getApplication(), "Tên: " + ten + "\n" +
-                "Ngày sinh: " + ngaysinh + "\n" +
-                message, Toast.LENGTH_LONG).show();
+
+        String ten = (edt1.getText().toString());
+        String ngaysinh = (edt2.getText().toString());
+        String sothichphu = (edt3.getText().toString());
+        String gioitinh = ("");
+        int id = rdg.getCheckedRadioButtonId();
+        rb =findViewById(id);
+        gioitinh=rb.getText()+"";
+        String sothich = ("");
+                if(cb1.isChecked())
+                    sothich+=cb1.getText().toString()+"; ";
+                if(cb2.isChecked())
+                    sothich+=cb2.getText().toString()+"; ";
+                if(cb3.isChecked())
+                    sothich+=cb3.getText().toString()+"; ";
+                if(cb4.isChecked())
+                    sothich+=cb4.getText().toString()+"; ";
+                if(cb5.isChecked())
+                    sothich+=cb5.getText().toString()+"; ";
+
+        Toast.makeText(MainActivity.this, ten + "\n" +
+                                                        "Ngày sinh: " + ngaysinh + "\n" +
+                                                        "Giới tính: " + gioitinh + "\n" +
+                                                        "Sở thích: " + sothich + sothichphu, Toast.LENGTH_SHORT).show();
     }
 }
